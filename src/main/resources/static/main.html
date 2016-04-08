@@ -1,0 +1,40 @@
+<div id="mainDiv" ng-controller="MainCtrl as main">
+	<div>
+		<button class="btn btn-sm btn-default" ng-click="main.logout();">Logout</button>
+	</div>
+	<br>
+	<div>
+		<span>command: </span>
+		<input type="text" ng-model="main.command">
+		<span>parameters: </span>
+		<input type="text" ng-model="main.parameters">
+	</div>
+	<br>
+	<div>
+		<span class="dropdown">
+			<button class="btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				<span>{{main.command}}</span>
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu navbar-default" role="menu">
+				<li ng-repeat="p in main.plugins" ng-click="main.changePlugin(p);">
+					<span>{{p}}</span>
+				</li>
+			</ul>
+		</span>
+		<button class="btn btn-sm btn-primary" ng-click="main.test();">
+			Test
+		</button>
+	</div>
+	<br>
+	<div>
+		<br>
+		Result:
+		<br>
+		<ul>
+			<li ng-repeat="r in main.result track by $index">
+				{{r}}
+			</li>
+		</ul>
+	</div>
+</div>

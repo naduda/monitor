@@ -1,0 +1,24 @@
+<div ng-controller="SecurityCtrl as security">
+	<div error-directive></div>
+	<form method="POST" class="form-horizontal" name="addUserForm" role="form" ng-submit="addUserForm.$valid && security.addUser();"autocomplete="off">
+		<label for="login">Login: </label>
+		<input id="login" type="text" ng-model="security.newUser.login" required>
+		<br>
+		<label for="email">Email: </label>
+		<input id="email" type="email" ng-model="security.newUser.email" required>
+		<br>
+		<label for="password">Password: </label>
+		<input id="password" type="text" ng-model="security.newUser.password" required>
+		<br>
+		<label for="password">Confirm Password: </label>
+		<input id="password2" type="text" ng-model="security.newUser.password2" required>
+		<br>
+		<div class="form-group">
+			<div class="col-xs-12">
+				<button type="submit" class="btn btn-primary pull-left" ng-disabled="isDisabled">
+					<span class="fa fa-check">Submit</span>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,21 @@
+<div ng-controller="SecurityCtrl as security">
+	<div error-directive></div>
+	<form method="POST" class="form-horizontal" name="recoverForm" role="form" ng-submit="recoverForm.$valid && security.recover();"autocomplete="off">
+		<label for="login">Login: </label>
+		<input id="login" type="text" ng-model="security.recoverUser.login">
+		<br>
+		<label for="email">Email: </label>
+		<input id="email" type="email" ng-model="security.recoverUser.email">
+		<br>
+		<label for="password">Password: </label>
+		<input id="password" type="text" ng-model="security.recoverUser.password" required>
+		<br><br>
+		<div class="form-group">
+			<div class="col-xs-12">
+				<button type="submit" class="btn btn-primary pull-left" ng-disabled="isDisabled">
+					<span class="fa fa-check">Submit</span>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
