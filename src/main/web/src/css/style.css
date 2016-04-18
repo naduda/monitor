@@ -67,7 +67,7 @@ input.ng-invalid.ng-touched {
 
 form{
 	background-color: white;
-	padding: 15px 10px 0 10px;
+	padding: 10px 0;
 	border: 2px solid #bbb;
 	border-radius: 5px;
 }
@@ -77,13 +77,23 @@ form hr.col-xs-12{
 	margin-bottom: 15px;
 	border-top: 1px solid #bbb;
 }
-form[name="loginForm"],
-form[name="regForm"]{
+form[name="loginForm"]{
 	max-width: 350px;
 	min-width: 300px;
 	margin: 100px auto 20px;
+	padding: 10px;
+	padding-bottom: 0;
 }
 form[name="regForm"] .control-label,
 form[name="loginForm"] .control-label{
 	padding: 7px 0 7px 10px;
+}
+
+user-additional .row,
+user-main .row{
+	margin: 0;
+	margin-bottom: 15px;
+	padding: 5px;
+	border: 1px solid #bbb;
+	border-radius: 4px;
 }

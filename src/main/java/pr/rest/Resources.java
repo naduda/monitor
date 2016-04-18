@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.mail.MessagingException;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -25,16 +24,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import pr.mail.SmtpMailSender;
-import pr.security.db.SecureDatabaseAPI;
 import pr.security.model.IUser;
 
 @RestController
 @RequestMapping("/resources")
-public class Resources {
+public class Resources extends ASecurityRest {
 	private static final Logger log = LoggerFactory.getLogger(Resources.class);
 	
-	@Resource(name="SecureDatabaseAPI")
-	private SecureDatabaseAPI dao;
 	@Autowired
 	private SmtpMailSender smtpMailSender;
 	@Value("${pr.security.block.attempts}")
@@ -45,33 +41,36 @@ public class Resources {
 	@RequestMapping(value="/user", method=RequestMethod.GET)
 	public Principal user(Principal user) {
 		if(user != null) {
-			IUser u = (IUser) dao.getUserByLogin(user.getName());
-			dao.updateUserAttempts(u.getId(), 0);
+			IUser u = (IUser) dao.getUserByLogin(null, user.getName());
+			dao.updateUserAttempts(null, u.getId(), 0);
 		}
 		return user;
 	}
-	
-	@RequestMapping(value="/addUser", method=RequestMethod.POST)
-	public  Map<String, Object> addUser(@RequestBody Map<String, String> user) {
-		Map<String, Object> model = new HashMap<String, Object>();
-//		User newUser = new User(user.get("login"), user.get("password"), user.get("email"), "", "");
-		Map<String, Object> newUser = new HashMap<>();
-		newUser.put("login", user.get("login"));
-		newUser.put("email", user.get("email"));
-		newUser.put("password", user.get("password"));
+
+	@RequestMapping(value="/addUser", method=RequestMethod.PUT)
+	public Object addUser(@RequestBody Map<String, Object> user) {
 		try {
-			model.put("result", dao.addUser(newUser) ? "ok" : "bad");
+			return dao.addUser(null, user) ? comm.RESULT_OK : comm.RESULT_BAD;
 		} catch (Exception e) {
-			model.put("result", "bad");
+			e.printStackTrace();
+			return comm.resultMessage(e.getMessage());
 		}
-		return model;
+	}
+	
+	@RequestMapping(value="/getUserFields", method=RequestMethod.GET)
+	public Object getUserFields() {
+		try {
+			return dao.getUserFields(null);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@RequestMapping(value="/isUserLock/{login}", method=RequestMethod.GET)
 	public Map<String, Object> isBlocked(@PathVariable String login) {
 		Map<String, Object> model = new HashMap<String, Object>();
 		try {
-			IUser u = (IUser) dao.getUserByLogin(login);
+			IUser u = (IUser) dao.getUserByLogin(null, login);
 			u.setMaxAttempts(maxAttempts);
 
 			model.put("result", u.isLocked());
@@ -100,57 +99,45 @@ public class Resources {
 	}
 	
 	@RequestMapping(value="/recover", method=RequestMethod.POST)
-	public  Map<String, Object> recover(@RequestBody Map<String, String> input) {
-		Map<String, Object> model = new HashMap<String, Object>();
-		String email = input.get("email");
-		String login = input.get("login");
+	public Object recover(@RequestBody Map<String, String> input) {
 		IUser user = null;
-		String password = input.get("password");
+		String loginEmail = input.get("loginEmail");
+		user = loginEmail.indexOf("@") > 0 ? 
+				dao.getUserByEmail(null, loginEmail) : dao.getUserByLogin(null, loginEmail);
 		
-		if(email != null && email.length() > 0) {
-			user = (IUser) dao.getUserByEmail(email);
-		} else {
-			user = dao.getUserByLogin(login);
-		}
+		if(user == null) return comm.RESULT_BAD;
 		
-		if(user != null) {
-			login = user.getLogin();
-			password = RandomStringUtils.random(8, true, true);
-			user.setPassword(password);
-			dao.updateUser(user);
-		} else {
-			log.info("User " + input + " not exist.");
-			model.put("result", "keyTryAgain");
-			return model;
-		}
-
-		String emailBody = "<strong>Authentication</strong><hr>" +
-				"Your " + "login is <strong>\"" + login + "\"</strong><br> Your password is <strong>\"" + password + "\"" +
-				"<br><br><hr><font size=\"0.8em\"><strong>Regards, Pavlo Naduda<br></strong>" +
-				"phone: 050 66 22 55 6<br>" +
-				"e-mail: naduda.pr@gmail.com (pr@ukreni.com.ua)</font>";
-
 		try {
-			smtpMailSender.send(user.getEmail(), "Authentication", emailBody);
-			model.put("result", "ok");
-		} catch (MessagingException e) {
-			model.put("result", "keyTryAgain");
-		}
+			String password = RandomStringUtils.random(8, true, true);
+			user.setPassword(password);
+			dao.updateUser(null, user.toMap());
+	
+			String emailBody = "<strong>Authentication</strong><hr>" +
+					"Your " + "login is <strong>\"" + user.getLogin() + 
+					"\"</strong><br> Your password is <strong>\"" + password + "\"" +
+					"<br><br><hr><font size=\"0.8em\"><strong>Regards, Pavlo Naduda<br></strong>" +
+					"phone: 050 66 22 55 6<br>" +
+					"e-mail: naduda.pr@gmail.com (pr@ukreni.com.ua)</font>";
 		
-		return model;
+			smtpMailSender.send(user.getEmail(), "Authentication", emailBody);
+			return comm.RESULT_OK;
+		} catch (MessagingException e) {
+			log.error(e.getMessage());
+		}
+		return comm.RESULT_BAD;
 	}
 	
 	@RequestMapping(value="/langs", method=RequestMethod.GET)
 	public List<?> langs() {
 		List<String> model = new ArrayList<>();
 		try {
-			File folder = Common4rest.getFileFromURL(getClass(), "./static/lang");
+			File folder = comm.getFileFromURL(getClass(), "./static/lang");
 			File[] listOfFiles = folder.listFiles();
 			for (File file : listOfFiles) {
 				model.add(file.getName());
 			}
 		} catch (Exception e) {
-			log.info("@RequestMapping /langs Error M " + Common4rest.getFileFromURL(getClass(), "./static/lang"));
+			log.info("@RequestMapping /langs Error M " + comm.getFileFromURL(getClass(), "./static/lang"));
 		}
 		log.info("Exist " + model.size() + " language-files");
 		return model;

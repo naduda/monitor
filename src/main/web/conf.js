@@ -4,10 +4,12 @@ exports.config = {
 		'browserName': 'chrome'
 	},
 	specs: [
-		'./test/*.spec.js'
+		'./test/createFirstUser.spec.js',
+		'./test/updateUser.spec.js',
+		'./test/deleteUser.spec.js'
 	],
 	jasmineNodeOpts: {
 		showColors: true,
-		defaultTimeoutInterval: 10000
+		defaultTimeoutInterval: 30000
 	}
 }

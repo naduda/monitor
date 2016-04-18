@@ -49,38 +49,38 @@ module monitor.services {
 					logoutPath: '/logout',
 					homePath: '/',
 					path: $location.path(),
+					authenticated: false,
 
 					authenticate: (credentials, callback) => {
-						var headers = credentials && credentials.username ?
+						var headers: any = credentials && credentials.username ?
 							{authorization: "Basic " + 
 								btoa(unescape(encodeURIComponent(credentials.username +
 									':' + credentials.password)))
 							} : {};
 						var config: any = {headers: headers};
-						var userURL = 'resources/user';
-						$http.get(userURL, config)
-							.success((response: any, status: any) => {
-								auth.authenticated = response.name ? true : false;
-								callback && callback(auth.authenticated);
-								if (auth.authenticated)
-									$location.path(auth.path == auth.loginPath ?
-										auth.homePath : auth.path);
-								else $location.path(auth.loginPath);
-							})
-							.error((response: any, status: any) => {
-								auth.authenticated = false;
-								if (status === 401 && credentials.username) {
-									var userLockURL = 'resources/isUserLock/';
-									$http.get(userLockURL + credentials.username)
-										.success((response: any) => {
-											response.result && (() => {
-												errorService.setError(response.message, response.wait);
-											})();
-										})
-										.error((response) => console.log(response));
-								}
-								callback && callback();
-							});
+						$http.get('resources/user', config)
+						.success((response: any, status: any) => {
+							auth.authenticated = response.name ? true : false;
+							callback && callback(auth.authenticated);
+							if (auth.authenticated)
+								$location.path(auth.path == auth.loginPath ?
+									auth.homePath : auth.path);
+							else $location.path(auth.loginPath);
+						})
+						.error((response: any, status: any) => {
+							auth.authenticated = false;
+							if (status === 401 && credentials.username) {
+								var userLockURL = 'resources/isUserLock/';
+								$http.get(userLockURL + credentials.username)
+								.success((response: any) => {
+									response.result && (() => {
+										errorService.setError(response.message, response.wait);
+									})();
+								})
+								.error((response) => console.log(response));
+							}
+							callback && callback();
+						});
 					},
 
 					clear: () => {
@@ -94,11 +94,11 @@ module monitor.services {
 								);
 					},
 
-					init: (homePath, loginPath, logoutPath, registrationPath) => {
+					init: (homePath, loginPath, logoutPath, safePath) => {
 						auth.homePath = homePath;
 						auth.loginPath = loginPath;
 						auth.logoutPath = logoutPath;
-						auth.registrationPath = registrationPath;
+						auth.safePath = safePath;
 
 						auth.authenticate({}, (authenticated) => {
 							if (authenticated) {
@@ -110,17 +110,16 @@ module monitor.services {
 					}
 			}
 
-			var enter = () => {
-					if ($location.path() != auth.loginPath &&
-							// $location.path() != auth.homePath &&
-							$location.path().indexOf(auth.registrationPath) < 0 &&
-							$location.path().indexOf('unsafe') < 0) {
-							auth.path = $location.path();
+			function enter(){
+				var path = $location.path();
+				if (path != auth.loginPath &&
+					auth.safePath.indexOf(path) < 0){
+					auth.path = $location.path();
 
-							if (!auth.authenticated) {
-									$location.path(auth.loginPath);
-							}
+					if (!auth.authenticated) {
+							$location.path(auth.loginPath);
 					}
+				}
 			}
 
 			return auth;

@@ -8,13 +8,13 @@ var monitor;
                 .when('/', {
                 templateUrl: 'main.html'
             })
-                .when('/securityTest', {
+                .when('/security', {
                 templateUrl: 'html/security/main.html'
             })
-                .when('/securityProfile', {
-                templateUrl: 'html/security/profile.html'
+                .when('/profile', {
+                templateUrl: 'html/security/registration.html'
             })
-                .when('/securityRegistration', {
+                .when('/registration', {
                 templateUrl: 'html/security/registration.html'
             })
                 .when('/login', {
@@ -23,16 +23,10 @@ var monitor;
                 .when('/recover', {
                 templateUrl: 'html/recover.html'
             })
-                .when('/registration', {
-                templateUrl: 'html/registration.html'
-            })
                 .when('/remove', {
                 templateUrl: 'html/security/remove.html'
             })
-                .when('/metersData/:ids', {
-                templateUrl: 'html/templates/menu/menu_2_1/metersData.html',
-            })
-                .otherwise('/main');
+                .otherwise('/security');
             $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             // $httpProvider.defaults.withCredentials = true;
             $httpProvider.interceptors.push('authInterceptorService');

@@ -7,6 +7,8 @@
 ///<reference path="./directives/Error.ts" />
 ///<reference path="./directives/Enter.ts" />
 ///<reference path="./directives/Login.ts" />
+///<reference path="./directives/security/userMain.ts" />
+///<reference path="./directives/security/userAdditional.ts" />
 ///<reference path="./services/DataService.ts" />
 ///<reference path="./services/httpService.ts" />
 ///<reference path="./services/translateService.ts" />
@@ -18,8 +20,8 @@
     var ctrls = monitor.controllers, dirs = monitor.directives, servs = monitor.services;
     var app = angular.module('Monitor', ['ngRoute', 'ngAnimate']);
     app.config(monitor.RouteConfig)
-        .run(function (authService, $rootScope, $route, translate, dataService) {
-        authService.init('/', '/login', 'logout', 'registration');
+        .run(function (authService, $rootScope, $route, $timeout, translate, dataService) {
+        authService.init('/', '/login', '/logout', ['/registration', '/recover']);
         $rootScope.$on("$includeContentLoaded", function (event, tName) {
             translate.translateAllByLocale(dataService.language());
         });
@@ -37,7 +39,9 @@
     app.directive('langDirective', [dirs.LangDirective])
         .directive('loginDirective', [dirs.Login])
         .directive('errorDirective', [dirs.Error])
-        .directive('ngEnter', [dirs.Enter]);
+        .directive('ngEnter', [dirs.Enter])
+        .directive('userMain', [dirs.UserMain])
+        .directive('userAdditional', [dirs.UserAdditional]);
     app.controller('SecurityCtrl', ctrls.SecurityCtrl)
         .controller('MainCtrl', ctrls.MainCtrl)
         .controller('RegistrationCtrl', ctrls.RegistrationCtrl);

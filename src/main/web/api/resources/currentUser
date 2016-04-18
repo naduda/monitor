@@ -1,10 +1,15 @@
 {
-    "id": 3,
     "login": "q2",
-    "email": "q@gmail.com",
-    "password": "qwe",
+    "email": "q2@nik.net.ua",
+    "name": "nameTest 2",
+    "age": 25,
+    "height": 1.85,
+    "isactive": true,
+    "createdtime": 1466241229901,
+    "id": 2,
     "active": true,
     "attempts": 0,
     "maxAttempts": 5,
-    "lastmodified": "2016-04-07 14:21:21"
+    "lastmodified": 1460970832082,
+    "password": "qUpdated"
 }

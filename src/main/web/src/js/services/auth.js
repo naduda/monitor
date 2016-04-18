@@ -29,6 +29,7 @@ var monitor;
                     logoutPath: '/logout',
                     homePath: '/',
                     path: $location.path(),
+                    authenticated: false,
                     authenticate: function (credentials, callback) {
                         var headers = credentials && credentials.username ?
                             { authorization: "Basic " +
@@ -36,8 +37,7 @@ var monitor;
                                         ':' + credentials.password)))
                             } : {};
                         var config = { headers: headers };
-                        var userURL = 'resources/user';
-                        $http.get(userURL, config)
+                        $http.get('resources/user', config)
                             .success(function (response, status) {
                             auth.authenticated = response.name ? true : false;
                             callback && callback(auth.authenticated);
@@ -72,11 +72,11 @@ var monitor;
                                 'Logout failed' : 'Logout succeeded');
                         });
                     },
-                    init: function (homePath, loginPath, logoutPath, registrationPath) {
+                    init: function (homePath, loginPath, logoutPath, safePath) {
                         auth.homePath = homePath;
                         auth.loginPath = loginPath;
                         auth.logoutPath = logoutPath;
-                        auth.registrationPath = registrationPath;
+                        auth.safePath = safePath;
                         auth.authenticate({}, function (authenticated) {
                             if (authenticated) {
                                 $location.path(auth.path);
@@ -85,17 +85,16 @@ var monitor;
                         $rootScope.$on('$routeChangeStart', function () { return enter(); });
                     }
                 };
-                var enter = function () {
-                    if ($location.path() != auth.loginPath &&
-                        // $location.path() != auth.homePath &&
-                        $location.path().indexOf(auth.registrationPath) < 0 &&
-                        $location.path().indexOf('unsafe') < 0) {
+                function enter() {
+                    var path = $location.path();
+                    if (path != auth.loginPath &&
+                        auth.safePath.indexOf(path) < 0) {
                         auth.path = $location.path();
                         if (!auth.authenticated) {
                             $location.path(auth.loginPath);
                         }
                     }
-                };
+                }
                 return auth;
             }
             return Auth;

@@ -18,8 +18,10 @@ import org.springframework.stereotype.Component;
 @Component("Common4rest")
 public class Common4rest {
 	private static final Logger log = LoggerFactory.getLogger(Common4rest.class);
+	public final String RESULT_OK = resultMessage("ok");
+	public final String RESULT_BAD = resultMessage("bad");
 	
-	public static String notNull(String s) {
+	public String notNull(String s) {
 		if(s == null) return ""; else return s;
 	}
 	
@@ -27,7 +29,7 @@ public class Common4rest {
 		return String.format("{\"result\": \"%s\"}", s);
 	}
 	
-	public static File getFileFromURL(Class<?> cls, String path) {
+	public File getFileFromURL(Class<?> cls, String path) {
 		URL url = cls.getClassLoader().getResource(path);
 		File file = null;
 		try {
@@ -44,7 +46,7 @@ public class Common4rest {
 		return file;
 	}
 	
-	public static List<String> getListOfFilesInJar(URL jar, String dirPath) {
+	public List<String> getListOfFilesInJar(URL jar, String dirPath) {
 		List<String> ret = null;
 		ZipInputStream zip;
 		try {

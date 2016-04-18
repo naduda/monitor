@@ -13,8 +13,9 @@ public class LogsTools {
 	
 	public static void main(String[] args) {
 		LogsTools lt = new LogsTools(50, '*', "Test title");
-		lt.addRow("SecureDatabaseAPITest is SUCCESS");
-		lt.addRow("Method addUser is SUCCESS");
+//		lt.addRow("SecureDatabaseAPITest is SUCCESS");
+//		lt.addRow("Create custom user with string, int, double, boolean, timestamp fields is SUCCESS");
+		lt.addRow("SecureDatabaseAPITest is SUCCESS Create custom user with string, int, double, boolean, timestamp fields is SUCCESS");
 		loger.info(lt.getLogs());
 		
 		lt = new LogsTools(70, '·', "Test title");
@@ -69,18 +70,33 @@ public class LogsTools {
 		log.append(s.toString());
 	}
 	
-	public void addRow(String value) {
-		number++;
+	public void addRow(String value, boolean isNewRowNumber) {
 		StringBuilder s = new StringBuilder();
 		s.append(defaultChar);
-		s.append((number < 10 ? "  " : " ") + number + ". ");
-		value = value.length() < length - 7 ? value : value.substring(0, length);
+		if (isNewRowNumber) {
+			number++;
+			s.append((number < 10 ? "  " : " ") + number + ". ");
+		} else {
+			s.append("     ");
+		}
+		String endString = value;
+		
+		value = value.length() < length - 9 ? value : value.substring(0, length - 9);
 		while(value.length() < length - 7) {
 			value += " ";
 		}
 		s.append(value);
 		s.append(defaultChar + "\n");
 		this.log.append(s.toString());
+		
+		if (endString.length() > length - 9) {
+			endString = endString.substring(length - 9);
+			addRow(endString, false);
+		}
+	}
+	
+	public void addRow(String value) {
+		addRow(value, true);
 	}
 	
 	public String getLogs() {

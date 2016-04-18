@@ -9,11 +9,13 @@ public interface IUser {
 	String getPassword();
 	void setPassword(String value);
 	String getEmail();
+	void setEmail(String value);
 	int getAttempts();
 	void setAttempts(int value);
 	void setMaxAttempts(int value);
 	Timestamp getLastmodified();
 	boolean isLocked();
 	boolean isActive();
+	void setActive(boolean value);
 	Map<String, Object> toMap();
 }

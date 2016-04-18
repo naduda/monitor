@@ -41,7 +41,7 @@ public class User implements IUser {
 		ret.put("active", active);
 		ret.put("attempts", attempts);
 		ret.put("lastmodified", lastmodified);
-		ret.put("maxAttempts", maxAttempts);
+		ret.put("maxattempts", maxAttempts);
 		return ret;
 	}
 

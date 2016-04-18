@@ -24,5 +24,4 @@ public class ApplicationTests {
 		security.test();
 		dbTest.test();
 	}
-
 }

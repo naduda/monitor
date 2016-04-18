@@ -1,0 +1,81 @@
+<div class="row">
+	<h3 align="center">Main Properties</h1>
+	<hr class="col-xs-12">
+	<div class="form-group">
+		<label for="username" class="col-xs-4 control-label" pr-lang="keyLogin"></label>
+		<div class="col-xs-8">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<i class="fa fa-user fa-fw"></i>
+				</div>
+				<input type="text" class="form-control" id="username" placeholder="login" ng-model="reg.newUser.login" ng-enter="addUserForm.$valid && reg.submit();" required>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="email" class="col-xs-4 control-label" pr-lang="kEmail"></label>
+		<div class="col-xs-8">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<i class="fa fa-at fa-fw"></i>
+				</div>
+				<input type="email" class="form-control" id="email" placeholder="email address" ng-disabled="isDisabled" autocomplete="off" ng-model="reg.newUser.email" ng-enter="addUserForm.$valid && reg.submit();" required>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group" ng-hide="reg.isProfile">
+		<label for="password" class="col-xs-4 control-label" pr-lang="kPassword"></label>
+		<div class="col-xs-8">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<i class="fa fa-key fa-fw"></i>
+				</div>
+				<input type="password" class="form-control" id="password" placeholder="password" ng-model="reg.newUser.password" ng-enter="addUserForm.$valid && reg.submit();"  ng-required="!reg.isProfile">
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group" ng-show="reg.isProfile">
+		<label for="password1" class="col-xs-4 control-label" pr-lang="kPassword1"></label>
+		<div class="col-xs-8">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<i class="fa fa-key fa-fw"></i>
+				</div>
+				<input type="password" class="form-control" id="password1" placeholder="password" ng-model="reg.newUser.password1" ng-enter="addUserForm.$valid && reg.submit();">
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="password2" class="col-xs-4 control-label" pr-lang="kPassword2"></label>
+		<div class="col-xs-8">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<i class="fa fa-key fa-fw"></i>
+				</div>
+				<input type="password" class="form-control" id="password2" placeholder="password" ng-model="reg.newUser.password2" ng-enter="addUserForm.$valid && reg.submit();" ng-required="!reg.isProfile">
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group" ng-show="reg.isProfile">
+		<label for="password3" class="col-xs-4 control-label" pr-lang="kPassword"></label>
+		<div class="col-xs-8">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<i class="fa fa-key fa-fw"></i>
+				</div>
+				<input type="password" class="form-control" id="password3" placeholder="password" ng-model="reg.newUser.password" ng-enter="addUserForm.$valid && reg.submit();" required>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="form-group" style="margin:0;margin-bottom: 15px;">
+	<button type="submit" class="btn btn-primary pull-right">
+		<i class="fa fa-fw fa-check"></i>
+		Submit
+	</button>
+</div>

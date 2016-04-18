@@ -19,6 +19,7 @@ import pr.security.model.User;
 @Service("UserDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
 	private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+	
 	@Resource(name="SecureDatabaseAPI")
 	private SecureDatabaseAPI dao;
 	@Value("${pr.security.block.attempts}")
@@ -29,16 +30,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.debug("before");
-		User user = (User) dao.getUserByLogin(username);
+		User user = (User) dao.getUserByLogin(null, username);
 		if(user == null) throw new UsernameNotFoundException("User " + username + " not found");
 		log.debug(user.toString());
 		user.setMaxAttempts(maxAttempts);
 		
 		if(Timestamp.valueOf(LocalDateTime.now()).getTime() - user.getLastmodified().getTime() > 1000 * timeout) {
-			dao.updateUserAttempts(user.getId(), 1);
+			dao.updateUserAttempts(null, user.getId(), 1);
 			user.setAttempts(1);
 		} else if(user.getAttempts() < maxAttempts) {
-			dao.updateUserAttempts(user.getId(), user.getAttempts() + 1);
+			dao.updateUserAttempts(null, user.getId(), user.getAttempts() + 1);
 		}
 		return new UserDetailsImpl(user);
 	}
