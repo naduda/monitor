@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import nik.monitor.dao.mappers.IMapper;
-import nik.monitor.dao.mappers.IMapperCreate;
 import pr.dao.BatisBuilder;
 import pr.dao.BatisImpl;
 
@@ -29,7 +28,6 @@ public class DataBaseImpl implements IMapper {
 		log.debug("Init DataBaseImpl");
 		
 		batis = new BatisBuilder(dataSource)
-				.addMappers(IMapperCreate.class)
 				.addMappers(IMapper.class).build();
 	}
 	

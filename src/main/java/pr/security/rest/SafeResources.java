@@ -24,6 +24,11 @@ public class SafeResources extends ASecurityRest {
 		Map<String, Object> u = dao.getUserProfile(null, getCurrentUser().getId());
 		Map<String, Object> ret = new HashMap<>();
 		u.keySet().forEach(k -> ret.put(k.toLowerCase(), u.get(k)));
+		ret.remove("password");
+		ret.remove("lastmodified");
+		ret.remove("active");
+		ret.remove("maxattempts");
+		ret.remove("attempts");
 		return ret;
 	}
 	

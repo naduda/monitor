@@ -44,7 +44,7 @@ public class SecurityProvider {
 		query = query.substring(0, query.length() - 2);
 		query += ");";
 		query = query.replace("#{fields}", keys);
-		log.info("\n\n\n" + query + "\n\n\n");
+		log.debug("\n\n\n" + query + "\n\n\n");
 		return query;
 	}
 
@@ -87,7 +87,7 @@ public class SecurityProvider {
 		query += " where login = '" + login + "'";
 		if(id != 0) query +=  " and id = " + id;
 		query += ";";
-		log.info("\n" + query);
+		log.debug("\n" + query);
 		return query;
 	}
 }

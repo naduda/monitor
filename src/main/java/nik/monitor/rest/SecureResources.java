@@ -28,6 +28,7 @@ import pr.security.rest.Common4rest;
 @RequestMapping("/secureresources")
 public class SecureResources {
 	private static final Logger log = LoggerFactory.getLogger(SecureResources.class);
+	
 	@Resource(name="DataBaseImpl") 
 	private DataBaseImpl dao;
 	@Resource(type = Common4rest.class)
