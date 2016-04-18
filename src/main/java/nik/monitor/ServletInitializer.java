@@ -5,10 +5,10 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 
 import nik.monitor.rest.SecureResources;
 import pr.mail.SmtpMailSender;
-import pr.rest.Common4rest;
-import pr.rest.Resources;
-import pr.rest.SafeResources;
 import pr.security.SecurityConfiguration;
+import pr.security.rest.Common4rest;
+import pr.security.rest.Resources;
+import pr.security.rest.SafeResources;
 
 public class ServletInitializer extends SpringBootServletInitializer {
 

@@ -1,4 +1,4 @@
-package pr.rest;
+package pr.security.rest;
 
 import javax.annotation.Resource;
 

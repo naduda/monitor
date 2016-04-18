@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import nik.monitor.dao.DataBaseImpl;
-import pr.rest.Common4rest;
+import pr.security.rest.Common4rest;
 
 @RestController
 @RequestMapping("/secureresources")

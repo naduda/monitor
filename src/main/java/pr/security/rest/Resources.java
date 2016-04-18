@@ -1,4 +1,4 @@
-package pr.rest;
+package pr.security.rest;
 
 import java.io.File;
 import java.security.Principal;
