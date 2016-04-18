@@ -3,7 +3,7 @@ describe('describe', () => {
 
 	it('delete user', () => {
 		browser.get(mainURL + 'login');
-		// removeUser('q', 'qwe');
+		removeUser('q', 'qwe');
 		removeUser('q2', 'qUpdated');
 	});
 

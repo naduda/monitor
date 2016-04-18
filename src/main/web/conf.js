@@ -4,6 +4,7 @@ exports.config = {
 		'browserName': 'chrome'
 	},
 	specs: [
+		'./test/deleteUserIfExist.spec.js',
 		'./test/createFirstUser.spec.js',
 		'./test/updateUser.spec.js',
 		'./test/deleteUser.spec.js'

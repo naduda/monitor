@@ -23,7 +23,7 @@ describe('describe', () => {
 			element(by.css('a[href="#/profile"]'))
 				.click();
 			element(by.model('reg.newUser.email'))
-				.sendKeys('q2.changed@nik.net.ua');
+				.clear().sendKeys('q2.changed@nik.net.ua');
 			var nameInput = getInputsByValue('nameTest 2').first();
 			nameInput.value = 'nameTest 2 changed';
 			var ageInput = getInputsByValue('25').first();
