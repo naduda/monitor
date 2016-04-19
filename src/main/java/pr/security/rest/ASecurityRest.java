@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import pr.security.db.SecureDatabaseAPI;
 import pr.security.model.IUser;
 
-abstract class ASecurityRest {
+public abstract class ASecurityRest {
 	
 	@Resource(name="SecureDatabaseAPI")
 	public SecureDatabaseAPI dao;

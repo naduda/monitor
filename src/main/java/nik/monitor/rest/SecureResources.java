@@ -22,11 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import nik.monitor.dao.DataBaseImpl;
+import pr.security.rest.ASecurityRest;
 import pr.security.rest.Common4rest;
 
 @RestController
 @RequestMapping("/secureresources")
-public class SecureResources {
+public class SecureResources extends ASecurityRest {
 	private static final Logger log = LoggerFactory.getLogger(SecureResources.class);
 	
 	@Resource(name="DataBaseImpl") 
