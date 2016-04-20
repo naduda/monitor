@@ -1,0 +1,20 @@
+.errorDiv{
+	border: 1px solid red;
+	border-radius: 4px;
+	margin: 15px;
+}
+.errorDiv .header{
+	border-bottom: 1px solid red;
+	padding: 5px 10px;
+	min-height: 25px;
+	border-radius: 4px 4px 0 0;
+}
+.errorDiv .left{float: left;}
+.errorDiv .right{text-align: right;}
+.errorDiv .content{
+	text-align: justify;
+	background-color: #fef;
+	padding: 15px 5px;
+	border-radius: 0 0 4px 4px;
+}
+.errorDiv .fa-close:hover{cursor: pointer;}

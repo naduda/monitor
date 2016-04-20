@@ -1,19 +1,18 @@
 ///<reference path="../typings/jquery/jquery.d.ts" />
 ///<reference path="../typings/angularjs/angular.d.ts" />
-///<reference path="./controllers/SecurityCtrl.ts" />
+///<reference path="./controllers/security/SecurityCtrl.ts" />
 ///<reference path="./controllers/MainCtrl.ts" />
-///<reference path="./controllers/RegistrationCtrl.ts" />
-///<reference path="./directives/Lang.ts" />
-///<reference path="./directives/Error.ts" />
-///<reference path="./directives/Enter.ts" />
-///<reference path="./directives/Login.ts" />
+///<reference path="./controllers/security/Registration.ts" />
+///<reference path="./directives/security/Lang.ts" />
+///<reference path="./directives/security/Error.ts" />
+///<reference path="./directives/security/Enter.ts" />
+///<reference path="./directives/security/Login.ts" />
 ///<reference path="./directives/security/userMain.ts" />
 ///<reference path="./directives/security/userAdditional.ts" />
-///<reference path="./services/DataService.ts" />
-///<reference path="./services/httpService.ts" />
-///<reference path="./services/translateService.ts" />
-///<reference path="./services/auth.ts" />
-///<reference path="./services/errorService.ts" />
+///<reference path="./services/security/DataService.ts" />
+///<reference path="./services/security/translateService.ts" />
+///<reference path="./services/security/auth.ts" />
+///<reference path="./services/security/errorService.ts" />
 ///<reference path="./filters.ts" />
 ///<reference path="routeConfig.ts" />
 (function () {
@@ -33,7 +32,6 @@
         'translate', 'dataService',
         servs.Auth])
         .service('dataService', [servs.DataService])
-        .service('httpService', ['$http', 'authService', servs.HTTPService])
         .service('translate', [servs.TranslateService])
         .service('errorService', ['$rootScope', servs.ErrorService]);
     app.directive('langDirective', [dirs.LangDirective])

@@ -1,4 +1,7 @@
-///<reference path="../services/auth.ts" />
+///<reference path="../../services/security/auth.ts" />
+///<reference path="../../services/security/ErrorService.ts" />
+///<reference path="../../services/security/DataService.ts" />
+///<reference path="../../services/security/TranslateService.ts" />
 'use strict'
 module monitor.controllers {
 	import AuthService = monitor.services.IAuth;
@@ -37,23 +40,6 @@ module monitor.controllers {
 					this.errorService.setError('Bad result.');
 				}
 			});
-		}
-
-		recover(){
-			console.log('recover');
-			var u = this.recoverUser;
-			if (u.loginEmail.length == 0) {
-				this.errorService.setError('Bad result.');
-			} else {
-				this.$http.post(this.RECOVER, u)
-				.success((data: any) => {
-					if (data.result === 'ok') {
-						this.authService.clear();
-					} else {
-						this.errorService.setError('Bad result.');
-					}
-				});
-			}
 		}
 	}
 }

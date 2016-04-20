@@ -1,15 +1,15 @@
 {
     "login": "q2",
-    "email": "q@q",
-    "password": "q",
-    "name": "q",
-    "age": 0,
-    "height": 0,
+    "email": "q2.changed@nik.net.ua",
+    "name": "nameTest 2 changed",
+    "age": 26,
+    "height": 1.8,
     "isactive": true,
-    "createdtime": 1463732366004,
+    "createdtime": 1467320400000,
     "id": 2,
     "active": true,
     "attempts": 0,
     "maxAttempts": 5,
-    "lastmodified": 1461140382738
+    "lastmodified": 1461147453584,
+    "password": "q"
 }

@@ -1,6 +1,7 @@
-///<reference path="../services/errorService.ts" />
-///<reference path="../services/translateService.ts" />
-///<reference path="../services/DataService.ts" />
+///<reference path="../../services/security/errorService.ts" />
+///<reference path="../../services/security/translateService.ts" />
+///<reference path="../../services/security/DataService.ts" />
+///<reference path="../../services/security/auth.ts" />
 'use strict'
 module monitor.directives {
 		import ErrorService = monitor.services.ErrorService;
@@ -45,7 +46,7 @@ module monitor.directives {
 		export function Login(): ng.IDirective {
 			return {
 				restrict: 'E',
-				templateUrl: 'html/directives/loginDirective.html',
+				templateUrl: 'html/directives/security/loginDirective.html',
 				controller: LoginController,
 				link: (scope: any, elm, attrs, ctrl) => {
 					scope.credentials.username = ctrl.dataService.login();

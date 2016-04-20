@@ -1,8 +1,8 @@
-///<reference path="../services/ErrorService.ts" />
-///<reference path="../services/httpService.ts" />
+///<reference path="../../services/security/ErrorService.ts" />
+///<reference path="../../services/security/DataService.ts" />
+///<reference path="../../services/security/TranslateService.ts" />
 'use strict'
 module monitor.controllers {
-	import HTTPService = monitor.services.HTTPService;
 	import ErrorService = monitor.services.ErrorService;
 	import DataService = monitor.services.DataService;
 	import TranslateService = monitor.services.TranslateService;
@@ -11,8 +11,6 @@ module monitor.controllers {
 		private PROFILE = 'saferesources/profile';
 		private UPDATE_PROFILE = 'saferesources/updateProfile';
 		private ADD_USER = 'resources/addUser';
-		private DEL_USER = 'saferesources/delUser';
-		private RECOVER = 'resources/recover';
 		private USER_FIELDS = 'resources/getUserFields';
 
 		private isProfile: boolean;

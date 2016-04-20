@@ -18,10 +18,10 @@ var monitor;
                 templateUrl: 'html/security/registration.html'
             })
                 .when('/login', {
-                templateUrl: 'html/login.html'
+                templateUrl: 'html/security/login.html'
             })
                 .when('/recover', {
-                templateUrl: 'html/recover.html'
+                templateUrl: 'html/security/recover.html'
             })
                 .when('/remove', {
                 templateUrl: 'html/security/remove.html'

@@ -1,5 +1,7 @@
-///<reference path="../../typings/angularjs/angular.d.ts" />
-///<reference path="../services/ErrorService.ts" />
+///<reference path="../../../typings/angularjs/angular.d.ts" />
+///<reference path="../../services/security/ErrorService.ts" />
+///<reference path="../../services/security/TranslateService.ts" />
+///<reference path="../../services/security/DataService.ts" />
 'use strict';
 module monitor.directives {
 	import ErrorService = monitor.services.ErrorService;

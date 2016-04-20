@@ -1,7 +1,7 @@
-///<reference path="../services/auth.ts" />
-///<reference path="../services/ErrorService.ts" />
-///<reference path="../services/DataService.ts" />
-///<reference path="../services/TranslateService.ts" />
+///<reference path="../../services/security/auth.ts" />
+///<reference path="../../services/security/ErrorService.ts" />
+///<reference path="../../services/security/DataService.ts" />
+///<reference path="../../services/security/TranslateService.ts" />
 'use strict';
 var monitor;
 (function (monitor) {

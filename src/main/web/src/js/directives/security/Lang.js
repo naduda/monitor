@@ -1,5 +1,5 @@
-///<reference path="../services/translateService.ts" />
-///<reference path="../services/DataService.ts" />
+///<reference path="../../services/security/translateService.ts" />
+///<reference path="../../services/security/DataService.ts" />
 'use strict';
 var monitor;
 (function (monitor) {

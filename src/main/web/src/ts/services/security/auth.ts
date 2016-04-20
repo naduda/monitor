@@ -1,4 +1,6 @@
-/// <reference path="../../typings/angularjs/angular-route.d.ts" />
+/// <reference path="../../../typings/angularjs/angular-route.d.ts" />
+///<reference path="../../services/security/errorService.ts" />
+///<reference path="../../services/security/DataService.ts" />
 'use strict'
 module monitor.services {
 	declare var unescape: any;

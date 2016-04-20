@@ -1,5 +1,3 @@
-///<reference path="../../services/errorService.ts" />
-///<reference path="../../services/translateService.ts" />
 'use strict';
 var monitor;
 (function (monitor) {

@@ -1,4 +1,4 @@
-///<reference path="../../typings/messageResources/messageResource.ts" />
+///<reference path="../../../typings/messageResources/messageResource.ts" />
 'use strict';
 module monitor.services {
 	class Inner{

@@ -1,9 +1,7 @@
-///<reference path="../services/httpService.ts" />
-///<reference path="../services/translateService.ts" />
-///<reference path="../services/DataService.ts" />
+///<reference path="../../services/security/translateService.ts" />
+///<reference path="../../services/security/DataService.ts" />
 'use strict'
 module monitor.directives {
-	import HTTPService = monitor.services.HTTPService;
 	import TranslateService = monitor.services.TranslateService;
 	import DataService = monitor.services.DataService;
 
@@ -18,40 +16,41 @@ module monitor.directives {
 
 		constructor($scope: ILangScope,
 								$location: ng.ILocationService,
-								httpService: HTTPService,
+								$http: ng.IHttpService,
 								private translate: TranslateService,
 								private dataService: DataService,
 								$timeout: ng.ITimeoutService) {
 
-			httpService.getLangs((response:string[]) => {
+			$http.get('resources/langs', {cache: true})
+			.success((response: string[]) => {
 				var locales = [], index:number = 1;
 				response.forEach((localeName:string) => {
-						var locale:any = {};
-						localeName = localeName.slice(
-							localeName.indexOf('_') + 1,
-							localeName.indexOf('.'));
+					var locale:any = {};
+					localeName = localeName.slice(
+						localeName.indexOf('_') + 1,
+						localeName.indexOf('.'));
 
-						locale.id = localeName;
-						locales.push(locale);
-						$scope.lang = locales.filter((f) => {
-								return f.id === dataService.language();
-						})[0];
+					locale.id = localeName;
+					locales.push(locale);
+					$scope.lang = locales.filter((f) => {
+							return f.id === dataService.language();
+					})[0];
 
-						translate.translateValueByKey(localeName, 
-							['kFlagLocale', 'kLangName'], (value, k) => {
-								if (value.indexOf('http') != -1) {
-									locale.img = value;
-								} else {
-									locale.langName = value;
-									if ((index++) == response.length) {
-										$scope.locales = locales;
-										translate.translateAllByLocale(dataService.language());
-										$timeout();
-									}
+					translate.translateValueByKey(localeName, 
+						['kFlagLocale', 'kLangName'], (value, k) => {
+							if (value.indexOf('http') != -1) {
+								locale.img = value;
+							} else {
+								locale.langName = value;
+								if ((index++) == response.length) {
+									$scope.locales = locales;
+									translate.translateAllByLocale(dataService.language());
+									$timeout();
 								}
-							});
+							}
+						});
 				});
-			}, (data, dd) => {console.log(data)});
+			});
 
 			$scope.changeLanguage = (id) => {
 				translate.translateAllByLocale(id);

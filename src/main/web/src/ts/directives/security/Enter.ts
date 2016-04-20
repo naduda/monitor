@@ -1,4 +1,5 @@
-///<reference path="../../typings/angularjs/angular.d.ts" />
+///<reference path="../../../typings/angularjs/angular.d.ts" />
+///<reference path="../../services/security/TranslateService.ts" />
 'use strict'
 module monitor.directives {
 		import TranslateService = monitor.services.TranslateService;

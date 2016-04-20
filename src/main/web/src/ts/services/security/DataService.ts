@@ -1,5 +1,4 @@
-/// <reference path="../../typings/angularjs/angular.d.ts" />
-///<reference path="HTTPWrapper.ts" />
+/// <reference path="../../../typings/angularjs/angular.d.ts" />
 'use strict';
 module monitor.services {
 	export class DataService {
