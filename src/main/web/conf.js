@@ -3,6 +3,9 @@ exports.config = {
 	capabilities: {
 		'browserName': 'chrome'
 	},
+	params: {
+		mainURL: 'http://localhost:8080/index.html#/'
+	},
 	specs: [
 		'./test/deleteUserIfExist.spec.js',
 		'./test/createFirstUser.spec.js',

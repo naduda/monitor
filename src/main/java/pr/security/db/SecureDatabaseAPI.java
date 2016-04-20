@@ -70,7 +70,7 @@ public class SecureDatabaseAPI extends ASecurityDatabaseAPI implements IMapper {
 	 * @param tableName If null then tableName = ${pr.security.userTableName}
 	 * @return If table exist return true else return false
 	 */
-	public boolean isTableExist(String tableName){
+	public boolean isTableExist(String tableName) {
 		IBatis isExist = s -> s.getMapper(IMapperCreate.class).isTableExist(dbName.toUpperCase(), tableName);
 		return (int)batis.setIBatis(isExist).get() > 0;
 	}
@@ -140,8 +140,6 @@ public class SecureDatabaseAPI extends ASecurityDatabaseAPI implements IMapper {
 				}
 			}
 			ret.remove(keyID);
-		} else {
-			log.info("EMPTY");
 		}
 		return ret;
 	}
@@ -159,7 +157,6 @@ public class SecureDatabaseAPI extends ASecurityDatabaseAPI implements IMapper {
 		user.put("active", true);
 		user.put("lastmodified", Timestamp.valueOf(LocalDateTime.now()));
 		if(!isTableExist(tableName)) {
-			log.info("\n\n\n\n" + user.toString());
 			createUserTable(getUserFieldsString(user));
 		}
 		return batis.setIBatis(s -> s.getMapper(IMapper.class)
@@ -173,8 +170,15 @@ public class SecureDatabaseAPI extends ASecurityDatabaseAPI implements IMapper {
 	 */
 	@Override
 	public User getUserByLogin(String tableName, String login) {
-		return (User) batis.setIBatis(s -> s.getMapper(IMapper.class)
-				.getUserByLogin(tableName == null ? this.tableName : tableName, login)).get();
+		try {
+			if(isTableExist(tableName == null ? this.tableName : tableName)) {
+				return (User) batis.setIBatis(s -> s.getMapper(IMapper.class)
+					.getUserByLogin(tableName == null ? this.tableName : tableName, login)).get();
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return null;
 	}
 	
 	/**
@@ -228,7 +232,6 @@ public class SecureDatabaseAPI extends ASecurityDatabaseAPI implements IMapper {
 	 */
 	@Override
 	public Boolean updateUser(String tableName, Map<String, Object> user) {
-		log.info("\n\n\n" + user.get("password").toString());
 		user.put("password", pe.encode(user.get("password").toString()));
 		user.remove("maxattempts");
 		user.remove("attempts");

@@ -1,8 +1,6 @@
 describe('describe', () => {
-	var mainURL = 'http://localhost:8088/index.html#/';
-
 	it('create user', () => {
-		browser.get(mainURL + 'login');
+		browser.get(browser.params.mainURL + 'login');
 		createUserWrapper();
 		createUserWrapper();
 	});
@@ -12,12 +10,18 @@ describe('describe', () => {
 			if(url.indexOf('#/login') < 0){
 				browser.setLocation('login');
 			}
-			element(by.css('a[href="#/registration"]')).click();
-			element(by.css('div[ng-show="reg.createTable"]'))
-				.isDisplayed()
-				.then(isVisible => {
-					createUser(isVisible);
-				});
+			element(by.css('a[href="#/registration"]'))
+				.click();
+			browser.getCurrentUrl().then(url => {
+				if(url.indexOf('#/registration') < 0){
+					browser.setLocation('registration');
+				}
+				element(by.css('div[ng-show="reg.createTable"]'))
+					.isDisplayed()
+					.then(isVisible => {
+						createUser(isVisible);
+					});
+			});
 		});
 	}
 
@@ -33,17 +37,19 @@ describe('describe', () => {
 
 		isFirst && addField();
 		isFirst && setName(0, 'name');
-		setValue(0, isFirst ? 'nameTest' : 'nameTest 2');
+		setValue(isFirst ? 0 : 'name', 
+			isFirst ? 'nameTest' : 'nameTest 2');
 
 		isFirst && addField();
 		isFirst && setType(1, 'integer');
 		isFirst && setName(1, 'age');
-		setValue(1, isFirst ? 33 : 25);
+		setValue(isFirst ? 1 : 'age', isFirst ? 33 : 25);
 
 		isFirst && addField();
 		isFirst && setType(2, 'double');
 		isFirst && setName(2, 'height');
-		setValue(2, isFirst ? 1.87 : 1.85);
+		setValue(isFirst ? 2 : 'height',
+			isFirst ? 1.87 : 1.85);
 
 		isFirst && addField();
 		isFirst && setType(3, 'boolean');
@@ -52,7 +58,8 @@ describe('describe', () => {
 		isFirst && addField();
 		isFirst && setType(4, 'timestamp');
 		isFirst && setName(4, 'createdtime');
-		isFirst && setValue(4, '2016-02-23 00:00:00.000');
+		isFirst && setValue(isFirst ? 4 : 'createdtime',
+			'2016-02-23 00:00:00.000');
 
 		element(by.css('button[type="submit"]')).click();
 		console.log('****************************');
@@ -70,17 +77,29 @@ describe('describe', () => {
 	}
 
 	var setName = (rowIndex, value) => {
-		return element.all(by.css('#customFields > div'))
+		element.all(by.css('#customFields > div'))
 			.get(rowIndex)
 			.element(by.css('input[placeholder="name"]'))
 			.sendKeys(value);
 	}
 
-	var setValue = (rowIndex, value) => {
-		return element.all(by.css('#customFields > div'))
-			.get(rowIndex)
-			.element(by.css('input[placeholder="value"]'))
-			.sendKeys(value);
+	var setValue = (fieldName, value) => {
+		if(!isNaN(fieldName)) {
+			var rowIndex = +fieldName;
+			element.all(by.css('#customFields > div'))
+				.get(rowIndex)
+				.element(by.css('input[placeholder="value"]'))
+				.clear().sendKeys(value);
+		} else {
+			element.all(by.css('input[placeholder="name"]'))
+			.each((elem, ind) => {
+				elem.getAttribute('value').then(text => {
+					if(text.toLowerCase() === fieldName) {
+						setValue(ind, value);
+					}
+				});
+			});
+		}
 	}
 
 	var setType = (rowIndex, type) => {

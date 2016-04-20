@@ -55,9 +55,9 @@ public abstract class ASecurityDatabaseAPI {
 				}
 			}
 			user.remove("customFields");
-			log.debug("=======================================");
+			log.debug("\n===========================================");
 			log.debug("\n" + fields + "\n");
-			log.debug("=======================================");
+			log.debug("===========================================");
 		}
 		return fields;
 	}

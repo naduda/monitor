@@ -1,10 +1,9 @@
 describe('describe', () => {
-	var mainURL = 'http://localhost:8088/index.html#/';
-
 	it('update user', () => {
-		browser.get(mainURL + 'login');
-		updatePassword('q2', 'q');
+		browser.get(browser.params.mainURL + 'login');
+		updatePassword('q2', 'q', 'qUpdated');
 		updateUser('q2', 'qUpdated');
+		updatePassword('q2', 'qUpdated', 'q');
 	});
 
 	var updateUser = (login, password) => {
@@ -24,17 +23,12 @@ describe('describe', () => {
 				.click();
 			element(by.model('reg.newUser.email'))
 				.clear().sendKeys('q2.changed@nik.net.ua');
-			var nameInput = getInputsByValue('nameTest 2').first();
-			nameInput.value = 'nameTest 2 changed';
-			var ageInput = getInputsByValue('25').first();
-			ageInput.value = '26';
-			var heightInput = getInputsByValue('1.84').first();
-			heightInput.value = 'nameTest 2 changed';
-			var select = element(by.css('.col-xs-12 > .col-xs-4:nth-child(2) > select'));
-			select.click();
-			select.all(by.tagName('option')).get(1).click();
-			var tsInput = getInputsByValue('nameTest 2').first();
-			tsInput.value = '2016-05-01 00:00:00.000';
+			setValue('name', 'nameTest 2 changed');
+			setValue('age', 26);
+			setValue('height', 1.80);
+			setValue('createdtime','2016-05-01 00:00:00.000');
+			element.all(by.model('reg.newUser.password'))
+				.get(1).sendKeys(password);
 			element(by.css('button[type="submit"]')).click();
 			console.log('****************************');
 			console.log('4. Update user');
@@ -42,7 +36,7 @@ describe('describe', () => {
 		});
 	}
 
-	var updatePassword = (login, password) => {
+	var updatePassword = (login, password, newPassword) => {
 		browser.getCurrentUrl().then(url => {
 			if(url.indexOf('#/login') < 0){
 				browser.setLocation('login');
@@ -58,9 +52,9 @@ describe('describe', () => {
 			element(by.css('a[href="#/profile"]'))
 				.click();
 			element(by.model('reg.newUser.password1'))
-				.sendKeys('qUpdated');
+				.sendKeys(newPassword);
 			element(by.model('reg.newUser.password2'))
-				.sendKeys('qUpdated');
+				.sendKeys(newPassword);
 			element.all(by.model('reg.newUser.password'))
 				.get(1).sendKeys(password);
 			element(by.css('button[type="submit"]')).click();
@@ -70,10 +64,22 @@ describe('describe', () => {
 		});
 	}
 
-	getInputsByValue = value => {
-		return element.all(by.tagName('input'))
-			.filter((e, ind) => {
-				return e.value === value;
+	var setValue = (fieldName, value) => {
+		if(!isNaN(fieldName)) {
+			var rowIndex = +fieldName;
+			element.all(by.css('#customFields > div'))
+				.get(rowIndex)
+				.element(by.css('input[placeholder="value"]'))
+				.clear().sendKeys(value);
+		} else {
+			element.all(by.css('input[placeholder="name"]'))
+			.each((elem, ind) => {
+				elem.getAttribute('value').then(text => {
+					if(text.toLowerCase() === fieldName) {
+						setValue(ind, value);
+					}
+				});
 			});
+		}
 	}
 });

@@ -1,10 +1,8 @@
 describe('describe', () => {
-	var mainURL = 'http://localhost:8088/index.html#/';
-
 	it('delete user', () => {
-		browser.get(mainURL + 'login');
+		browser.get(browser.params.mainURL + 'login');
 		removeUser('q', 'qwe');
-		removeUser('q2', 'qUpdated');
+		removeUser('q2', 'q');
 	});
 
 	var removeUser = (login, password) => {

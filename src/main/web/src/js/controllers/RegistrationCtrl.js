@@ -194,7 +194,9 @@ var monitor;
                 var hour = fullNumber(a.getHours());
                 var min = fullNumber(a.getMinutes());
                 var sec = fullNumber(a.getSeconds());
-                var SSS = fullNumber(a.getMilliseconds());
+                var S = a.getMilliseconds();
+                var SSS = S < 10 ? '00' + S :
+                    S < 100 ? '0' + S : S;
                 var time = year + '-' + month + '-' + date +
                     ' ' + hour + ':' + min + ':' + sec + '.' + SSS;
                 return time;
@@ -298,7 +300,14 @@ var monitor;
                                 val = val == 0 ? new Date().getTime() : val;
                                 value.value =
                                     timestamp2date(new Date(val), fullNumber);
+                                value.pattern = '(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))\\s(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}.[0-9]{1}[0-9]{1}[0-9]{1}';
                             }
+                        }
+                        if (type.value === 'Integer')
+                            value.type = 'number';
+                        if (type.value === 'Double') {
+                            value.type = 'number';
+                            value.step = '0.001';
                         }
                     }
                 }

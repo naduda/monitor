@@ -87,7 +87,7 @@ public class SecurityProvider {
 		query += " where login = '" + login + "'";
 		if(id != 0) query +=  " and id = " + id;
 		query += ";";
-		log.debug("\n" + query);
+		log.debug("\n\n\n" + query + "\n\n\n");
 		return query;
 	}
 }
