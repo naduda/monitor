@@ -17,10 +17,7 @@ body{
 input.ng-invalid.ng-touched {
 	border-color: red;
 }
-/*input.ng-valid.ng-touched {
-	background-color: white;
-}
-*/
+
 @media screen {
 	.modal:before {
 		display: inline-block;
@@ -48,23 +45,6 @@ input.ng-invalid.ng-touched {
 	background-color: transparent;
 }
 
-.navbar-fixed-top .navbar-header,
-.navbar-fixed-top lang-directive{
-	margin: 10px;
-	margin-bottom: 0;
-}
-.navbar-inverse .lang-directive.dropdown button{
-	border-style: none;
-	color: #9d9d9d;
-}
-.footer{
-	padding: 5px;
-	color: white;
-	min-height: 160px;
-}
-
-#loginDiv{min-height: calc(100% - 160px);}
-
 form{
 	background-color: white;
 	padding: 10px 0;
@@ -84,7 +64,7 @@ form[name="loginForm"]{
 	padding: 10px;
 	padding-bottom: 0;
 }
-form[name="regForm"] .control-label,
+
 form[name="loginForm"] .control-label{
 	padding: 7px 0 7px 10px;
 }
