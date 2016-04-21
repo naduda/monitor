@@ -7,11 +7,15 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pr.LogsTools;
+
 @SuppressWarnings("unchecked")
 public class SecurityProvider {
 	private static final Logger log = LoggerFactory.getLogger(SecurityProvider.class);
+	private LogsTools lt;
 	
 	public String addUser(Map<String, Object> params) {
+		lt = new LogsTools(70, '*', "SecurityProvider");
 		Map<String, Object> user = (Map<String, Object>) params.get("user");
 		String tableName = params.get("tableName").toString();
 		String query = "INSERT INTO " + tableName + " (#{fields}) VALUES (";
@@ -44,11 +48,13 @@ public class SecurityProvider {
 		query = query.substring(0, query.length() - 2);
 		query += ");";
 		query = query.replace("#{fields}", keys);
-		log.debug("\n\n\n" + query + "\n\n\n");
+		lt.addRow(query);
+		log.debug(lt.getLogs());
 		return query;
 	}
 
 	public String updateUser(Map<String, Object> params) {
+		lt = new LogsTools(70, '*', "SecurityProvider");
 		Map<String, Object> user = (Map<String, Object>) params.get("user");
 		String tableName = params.get("tableName").toString();
 		String query = "UPDATE " + tableName + " set ";
@@ -87,7 +93,8 @@ public class SecurityProvider {
 		query += " where login = '" + login + "'";
 		if(id != 0) query +=  " and id = " + id;
 		query += ";";
-		log.debug("\n\n\n" + query + "\n\n\n");
+		lt.addRow(query);
+		log.debug(lt.getLogs());
 		return query;
 	}
 }

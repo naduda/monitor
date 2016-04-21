@@ -21,46 +21,49 @@
 </head>
 <body ng-app="Monitor">
 	<div ng-view class="mainContent"></div>
-	<!-- <ng-include src="'main.html'" ng-controller="MainCtrl as main"></ng-include> -->
 
 	<!-- build:js js/vendor.js --><!-- bower:js -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/angular-animate/angular-animate.js"></script>
-<script src="bower_components/blob-polyfill/Blob.js"></script>
-<script src="bower_components/file-saver.js/FileSaver.js"></script>
-<script src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/bootstrap3-dialog/dist/js/bootstrap-dialog.min.js"></script>
-<script src="bower_components/moment/moment.js"></script>
-<script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
-<script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-<script src="bower_components/messageResource.js/dist/messageResource.min.js"></script>
-<script src="bower_components/angular-i18n/angular-locale_uk-ua.js"></script>
-<!-- endbower -->
-<!-- endbuild -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.js"></script>
+	<script src="bower_components/blob-polyfill/Blob.js"></script>
+	<script src="bower_components/file-saver.js/FileSaver.js"></script>
+	<script src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/bootstrap3-dialog/dist/js/bootstrap-dialog.min.js"></script>
+	<script src="bower_components/moment/moment.js"></script>
+	<script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+	<script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="bower_components/messageResource.js/dist/messageResource.min.js"></script>
+	<script src="bower_components/angular-i18n/angular-locale_uk-ua.js"></script>
+	<!-- endbower -->
+	<!-- endbuild -->
+
+	<!-- build:js js/security.min.js -->
+	<script src="js/security/filters.js"></script>
+
+	<script src="js/security/services/DataService.js"></script>
+	<script src="js/security/services/translateService.js"></script>
+	<script src="js/security/services/auth.js"></script>
+	<script src="js/security/services/errorService.js"></script>
+
+	<script src="js/security/directives/Lang.js"></script>
+	<script src="js/security/directives/Error.js"></script>
+	<script src="js/security/directives/Enter.js"></script>
+	<script src="js/security/directives/Login.js"></script>
+	<script src="js/security/directives/userMain.js"></script>
+	<script src="js/security/directives/userAdditional.js"></script>
+	<script src="js/security/controllers/SecurityCtrl.js"></script>
+	<script src="js/security/controllers/Registration.js"></script>
+
+	<script src="js/security/init.js"></script>
+	<!-- endbuild -->
 
 	<!-- build:js js/main.min.js -->
-	<script src="js/filters.js"></script>
-	<script src="js/routeConfig.js"></script>
-
-	<script src="js/services/security/DataService.js"></script>
-	<script src="js/services/security/translateService.js"></script>
-	<script src="js/services/security/auth.js"></script>
-	<script src="js/services/security/errorService.js"></script>
-
-	<script src="js/directives/security/Lang.js"></script>
-	<script src="js/directives/security/Error.js"></script>
-	<script src="js/directives/security/Enter.js"></script>
-	<script src="js/directives/security/Login.js"></script>
-	<script src="js/directives/security/userMain.js"></script>
-	<script src="js/directives/security/userAdditional.js"></script>
-	<script src="js/controllers/security/SecurityCtrl.js"></script>
-	<script src="js/controllers/security/Registration.js"></script>
-	
 	<script src="js/controllers/MainCtrl.js"></script>
 
+	<script src="js/routeConfig.js"></script>
 	<script src="js/init.js"></script>
 	<!-- endbuild -->
 </body>

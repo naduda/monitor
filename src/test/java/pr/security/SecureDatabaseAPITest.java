@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import pr.LogsTools;
 import pr.security.db.SecureDatabaseAPI;
 import pr.security.model.IUser;
 import pr.security.model.User;

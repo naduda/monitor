@@ -77,7 +77,8 @@ gulp.task('build', ['clean', 'typescript'], function () {
 							 /lang-directive/,
 							 /user-additional +/g,
 							 /user-main +/g,
-							 /form-control/
+							 /form-control/,
+							 'form hr.col-xs-12'
 					]
 				})))
 				.pipe(gulpif('*.css', minifyCss()))

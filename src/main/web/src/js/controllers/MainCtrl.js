@@ -1,5 +1,5 @@
-///<reference path="../services/security/DataService.ts" />
-///<reference path="../services/security/auth.ts" />
+///<reference path="../security/services/DataService.ts" />
+///<reference path="../security/services/auth.ts" />
 'use strict';
 var monitor;
 (function (monitor) {

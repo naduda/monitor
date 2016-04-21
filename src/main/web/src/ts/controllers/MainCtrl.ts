@@ -1,9 +1,9 @@
-///<reference path="../services/security/DataService.ts" />
-///<reference path="../services/security/auth.ts" />
+///<reference path="../security/services/DataService.ts" />
+///<reference path="../security/services/auth.ts" />
 'use strict'
 module monitor.controllers {
-	import DataService = monitor.services.DataService;
-	import AuthService = monitor.services.IAuth;
+	import DataService = security.services.DataService;
+	import AuthService = security.services.IAuth;
 
 	export class MainCtrl {
 		private userName: string;

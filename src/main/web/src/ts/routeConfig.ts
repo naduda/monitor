@@ -1,6 +1,6 @@
 ///<reference path="../typings/angularjs/angular-route.d.ts" />
 'use strict'
-module monitor{
+module monitor {
 	export class RouteConfig{
 		constructor($routeProvider: ng.route.IRouteProvider,
 								$httpProvider: ng.IHttpProvider) {
