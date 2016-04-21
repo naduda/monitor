@@ -13,7 +13,7 @@ var monitor;
                 this.userName = dataService.login();
                 this.command = 'c:/gradle/bin/gradle.bat';
                 this.parameters = '-version';
-                $http.get('secureresources/profileInfo')
+                $http.get('saferesources/profile')
                     .success(function (data) {
                     console.log(data);
                 });

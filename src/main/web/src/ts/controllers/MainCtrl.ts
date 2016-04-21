@@ -20,7 +20,7 @@ module monitor.controllers {
 			this.command = 'c:/gradle/bin/gradle.bat';
 			this.parameters = '-version';
 
-			$http.get('secureresources/profileInfo')
+			$http.get('saferesources/profile')
 			.success((data) => {
 				console.log(data);
 			});

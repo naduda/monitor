@@ -6,7 +6,7 @@ module monitor {
 								$httpProvider: ng.IHttpProvider) {
 			$routeProvider
 				.when('/', {
-					templateUrl: 'main.html'
+					templateUrl: 'html/main.html'
 				})
 				.when('/security', {
 					templateUrl: 'html/security/main.html'

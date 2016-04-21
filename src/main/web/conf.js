@@ -4,7 +4,7 @@ exports.config = {
 		'browserName': 'chrome'
 	},
 	params: {
-		mainURL: 'http://localhost:8088/index.html#/'
+		mainURL: 'http://localhost:8080/index.html#/'
 	},
 	specs: [
 		'./test/deleteUserIfExist.spec.js',

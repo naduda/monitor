@@ -6,7 +6,7 @@ var monitor;
         function RouteConfig($routeProvider, $httpProvider) {
             $routeProvider
                 .when('/', {
-                templateUrl: 'main.html'
+                templateUrl: 'html/main.html'
             })
                 .when('/security', {
                 templateUrl: 'html/security/main.html'
