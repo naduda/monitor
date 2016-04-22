@@ -12,15 +12,23 @@ public class LogsTools {
 	private int number;
 	
 //	public static void main(String[] args) {
-//		LogsTools lt = new LogsTools(50, '*', "Test title");
-////		lt.addRow("SecureDatabaseAPITest is SUCCESS");
-////		lt.addRow("Create custom user with string, int, double, boolean, timestamp fields is SUCCESS");
+//		LogsTools lt = new LogsTools(50, '*', "Test title 1");
+//		lt.addRow("SecureDatabaseAPITest is SUCCESS");
+//		lt.addRow("Create custom user with string, int, double, boolean, timestamp fields is SUCCESS");
 //		lt.addRow("SecureDatabaseAPITest is SUCCESS Create custom user with string, int, double, boolean, timestamp fields is SUCCESS");
 //		loger.info(lt.getLogs());
 //		
-//		lt = new LogsTools(70, '·', "Test title");
+//		lt.clearContent();
+//		lt.addRow("New Row after clear...");
+//		loger.info(lt.getLogs());
+//		
+//		lt = new LogsTools(70, '·', "Test title 2");
 //		lt.addRow("SecureDatabaseAPITest is SUCCESS");
 //		lt.addRow("Method addUser is SUCCESS");
+//		loger.info(lt.getLogs());
+//		
+//		lt.clearContent();
+//		lt.addRow("New Row after clear...");
 //		loger.info(lt.getLogs());
 //	}
 	
@@ -33,6 +41,13 @@ public class LogsTools {
 		addTitle(title);
 		addEmptyRow();
 		loger.debug("Init");
+	}
+	
+	public void clearContent() {
+		System.out.println("L = " + this.length + " / " + log.length());
+		log.delete(this.length * 4 + 5, log.length());
+		this.number = 0;
+		log.append(this.defaultChar + "\n");
 	}
 	
 	private void addTitle(String s) {

@@ -69,6 +69,16 @@ form[name="loginForm"] .control-label{
 	padding: 7px 0 7px 10px;
 }
 
+ul.dropdown-menu {
+	max-height: 300px;
+	overflow: auto;
+}
+ul.dropdown-menu > li:hover{
+	cursor: pointer;
+	background-color: #0090D8;
+	color: white;
+}
+
 user-additional .row,
 user-main .row{
 	margin: 0;

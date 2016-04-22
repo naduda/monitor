@@ -74,6 +74,7 @@ gulp.task('build', ['clean', 'typescript'], function () {
 							 /.leftMenu/,
 							 /.rightPanel/,
 							 /.nav+/g,
+							 /.dropdown/,
 							 /lang-directive/,
 							 /user-additional +/g,
 							 /user-main +/g,
