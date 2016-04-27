@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import nik.monitor.dao.DataBaseImpl;
+import pr.LogsTools;
 import pr.security.rest.ASecurityRest;
 import pr.security.rest.Common4rest;
 
@@ -38,26 +37,26 @@ public class SecureResources extends ASecurityRest {
 	@RequestMapping(value="/test", method=RequestMethod.POST)
 	public Map<String, Object> test(@RequestBody Map<String, Object> data) {
 		Map<String, Object> ret = new HashMap<>();
-		log.info(data.toString());
+		LogsTools lt = new LogsTools(50, '*', "Command");
 		String cmd = data.get("command").toString();
 		if(cmd.startsWith("check")) {
-			String fullPath = comm.getFileFromURL(this.getClass(), "./static/plugins/" + cmd).getAbsolutePath();
-			cmd = fullPath;
-			log.info(fullPath);
-		} else if (cmd.startsWith("static")) {
-			String fullPath = comm.getFileFromURL(this.getClass(), "").getAbsolutePath();
-			fullPath = fullPath
-					.substring(0, fullPath.lastIndexOf("/") < 0 ? fullPath.lastIndexOf("\\") : fullPath.lastIndexOf("/"));
-			cmd = cmd.substring(cmd.lastIndexOf("/") < 0 ? cmd.lastIndexOf("\\") : cmd.lastIndexOf("/"));
-			cmd = fullPath + "/plugins" + cmd;
-			log.info(fullPath);
+			String fullPath = comm.getJarPath();
+			if(fullPath.indexOf("/classes/") > 0) {
+				cmd = comm.getFileFromURL(this.getClass(), "./static/plugins/" + cmd).getAbsolutePath();
+			} else {
+				cmd = fullPath + "plugins/" + cmd;
+			}
 		}
+		
 		String[] pars = data.get("params").toString().split("\\s+");
 		List<String> command = new ArrayList<>();
 		command.add(cmd);
+		String params = " ";
 		for (String par : pars) {
 			command.add(par);
+			params += par + " ";
 		}
+		lt.addRow(cmd + params);
 		try {
 			ProcessBuilder builder = new ProcessBuilder(command);
 			builder.redirectErrorStream(true);
@@ -69,7 +68,6 @@ public class SecureResources extends ASecurityRest {
 				BufferedReader readerErr = new BufferedReader(new InputStreamReader(stderr));) {
 				String line = "";
 				while ((line  = reader.readLine()) != null) {
-					log.info(line);
 					ret.put(ret.size() + "", line);
 				}
 				
@@ -80,11 +78,13 @@ public class SecureResources extends ASecurityRest {
 //				process.waitFor();
 			} catch (Exception e1) {
 				log.error("error");
+				lt.addRow("error in command");
 				log.error(ExceptionUtils.getFullStackTrace(e1));
 			}
 		} catch (IOException e) {
 			log.error(ExceptionUtils.getFullStackTrace(e));
 		}
+		log.debug(lt.getLogs());
 		return ret;
 	}
 	
@@ -94,19 +94,29 @@ public class SecureResources extends ASecurityRest {
 		final String DIR_PLUGINS = "static/plugins";
 		File folder = comm.getFileFromURL(this.getClass(), "./" + DIR_PLUGINS);
 		File[] listOfFiles = folder.listFiles();
+		LogsTools lt = new LogsTools(50, '*', "plugins");
+		lt.addRow(folder.getAbsolutePath());
+		lt.addRow(listOfFiles == null ? "listOfFiles == null" : "listOfFiles = " + listOfFiles.length);
 		if(listOfFiles != null) {
 			for (File file : listOfFiles) {
 				model.put("" + model.size(), file.getName());
 			}
 		} else {
-			String path = folder.getAbsolutePath();
+			String path = comm.getJarPath() + "plugins";
+			lt.addRow(path);
 			try {
-				comm.getListOfFilesInJar(new URL("file:/" + path.substring(0, path.indexOf("!"))), DIR_PLUGINS)
-				.forEach(s -> model.put("" + model.size(), s));
-			} catch (MalformedURLException e) {
+				listOfFiles = new File(path).listFiles();
+				if(listOfFiles != null) {
+					for (File file : listOfFiles) {
+						model.put("" + model.size(), file.getName());
+					}
+				}
+			} catch (Exception e) {
 				log.error("Bad URL");
+				lt.addRow("Bad URL");
 			}
 		}
+		log.debug(lt.getLogs());
 		return model;
 	}
 }

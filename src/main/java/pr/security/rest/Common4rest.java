@@ -46,6 +46,13 @@ public class Common4rest {
 		return file;
 	}
 	
+	public String getJarPath() {
+		String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		if(path.startsWith("file:")) path = path.substring(6, path.length() - 2);
+		path = path.substring(0, path.lastIndexOf("/") + 1);
+		return path;
+	}
+	
 	public List<String> getListOfFilesInJar(URL jar, String dirPath) {
 		List<String> ret = null;
 		ZipInputStream zip;
