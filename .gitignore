@@ -68,3 +68,5 @@ $RECYCLE.BIN/
 *.lnk
 src/main/web/api/resources/currentUser
 src/main/web/api/resources/user
+src/main/resources/security.properties
+src/main/resources/security.properties
